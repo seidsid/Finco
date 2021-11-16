@@ -1,5 +1,6 @@
 package ui;
 
+import ui.dialog.GenerateBillDialog;
 import ui.dialog.NewAccountDialog;
 
 import javax.swing.*;
@@ -115,6 +116,8 @@ public class MainPageGUI extends JFrame {
     }
 
     private void btnGenerateBillActionPerformed(ActionEvent event) {
+        GenerateBillDialog dialog = new GenerateBillDialog();
+        dialog.setVisible(true);
     }
 
     private void btnDepositActionPerformed(ActionEvent event) {
