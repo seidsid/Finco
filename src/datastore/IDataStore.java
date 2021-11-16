@@ -1,12 +1,12 @@
 package datastore;
 
 import domain.ICustomer;
-import java.util.List;
+import java.util.Optional;
 
 public interface IDataStore <T extends ICustomer>{
     void persist (T customer);
-    List<T> load();
+    Iterable<T> load();
     void update(T customer);
-    T findByEmail(String email);
+    Optional<T> findByEmail(String email);
     boolean exists(String email);
 }
