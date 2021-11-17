@@ -44,8 +44,8 @@ public class FinCoMainGUI extends BaseMainJFrame {
     @Override
     protected void btnDepositActionPerformed(ActionEvent e) {
         int selection = jTable.getSelectionModel().getMinSelectionIndex();
-        AmountDialog dialog = new AmountDialog(list -> {
-            if (selection >= 0) {
+        if (selection >= 0) {
+            AmountDialog dialog = new AmountDialog(list -> {
                 try {
                     long currentValue = Long.parseLong((String) model.getValueAt(selection, 3));
                     long depositAmount = Long.parseLong(list.get(0));
@@ -57,19 +57,20 @@ public class FinCoMainGUI extends BaseMainJFrame {
                 } catch (NumberFormatException exception) {
                     JOptionPane.showMessageDialog(this, "Amount must be Number.");
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, "Select one row in the Table!");
-            }
-        }, "Deposit", "Account", (String) model.getValueAt(selection, 1));
-        UiUtilities.getInstance().centerFrameOnDesktop(dialog);
-        dialog.setVisible(true);
+            }, "Deposit", "Account", (String) model.getValueAt(selection, 1));
+            UiUtilities.getInstance().centerFrameOnDesktop(dialog);
+            dialog.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Select one row in the Table!");
+        }
     }
 
     @Override
     protected void btnWithdrawActionPerformed(ActionEvent e) {
         int selection = jTable.getSelectionModel().getMinSelectionIndex();
-        AmountDialog dialog = new AmountDialog(list -> {
-            if (selection >= 0) {
+        if (selection >= 0) {
+            AmountDialog dialog = new AmountDialog(list -> {
+
                 try {
                     long currentValue = Long.parseLong((String) model.getValueAt(selection, 3));
                     long withdrawAmount = Long.parseLong(list.get(0));
@@ -81,12 +82,12 @@ public class FinCoMainGUI extends BaseMainJFrame {
                 } catch (NumberFormatException exception) {
                     JOptionPane.showMessageDialog(this, "Amount must be Number.");
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, "Select one row in the Table!");
-            }
-        }, "Withdraw", "Account", (String) model.getValueAt(selection, 1));
-        UiUtilities.getInstance().centerFrameOnDesktop(dialog);
-        dialog.setVisible(true);
+            }, "Withdraw", "Account", (String) model.getValueAt(selection, 1));
+            UiUtilities.getInstance().centerFrameOnDesktop(dialog);
+            dialog.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Select one row in the Table!");
+        }
     }
 
     @Override

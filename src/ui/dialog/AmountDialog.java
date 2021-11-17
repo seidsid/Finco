@@ -24,6 +24,7 @@ public class AmountDialog extends BaseDialog {
         this.title = title;
         this.fieldTitle = fieldTitle;
         this.fieldValue = fieldValue;
+        setTitle(title);
 
         setBtnSubmitVisible();
         reCreateUI();
