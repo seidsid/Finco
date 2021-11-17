@@ -10,12 +10,14 @@ public class InMemoryDataStore<T extends ICustomer> implements IDataStore<T>{
     private HashMap<String,T> db;
 
     public InMemoryDataStore() {
-        db=new HashMap();
+        db=new HashMap<>();
     }
 
     @Override
     public void persist(T customer) {
-        db.put(customer.getEmail(),customer);
+        if (!exists(customer.getEmail())) {
+            db.put(customer.getEmail().toLowerCase(), customer);
+        }
     }
 
     @Override
@@ -25,24 +27,22 @@ public class InMemoryDataStore<T extends ICustomer> implements IDataStore<T>{
 
     @Override
     public void update(T customer) {
-        for(String c:db.keySet()) {
-            if (customer.getEmail().equalsIgnoreCase(c)) db.put(c,customer);
-        }
+        if(exists(customer.getEmail()))
+            db.replace(customer.getEmail().toLowerCase(),customer);
     }
 
     @Override
     public Optional<T> findByEmail(String email) {
-        for(String c:db.keySet()){
-            if(email.equalsIgnoreCase(c)) return Optional.of(db.get(c));
+        if(exists(email)){
+            T c=db.get(email.toLowerCase());
+            return Optional.of(c);
         }
-         return Optional.empty();
+        return Optional.empty();
     }
 
     @Override
     public boolean exists(String email) {
-        for(String c:db.keySet()){
-        if(email.equalsIgnoreCase(c)) return true;
-        }
-         return false;
+        if(db.containsKey(email.toLowerCase())) return true;
+        else return false;
     }
 }
