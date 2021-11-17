@@ -1,14 +1,20 @@
 package ui.dialog;
 
 import ui.base.BaseDialog;
+import ui.common.OkSubmitDelegate;
 
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * @author MinPhone, Seid, Asrat
+ */
 public class NewAccountDialog extends BaseDialog {
 
-    public NewAccountDialog() {
-        setBtnSubmitVisible(true);
+    public NewAccountDialog(OkSubmitDelegate delegate) {
+        super(delegate);
+        setBtnSubmitVisible();
+        reCreateUI();
     }
 
     @Override

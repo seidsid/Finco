@@ -2,7 +2,10 @@ import service.IFincoServiceFacade;
 import ui.GUI;
 import ui.SwingGUI;
 
-public class FInCoComponentFactory implements IFincoAbstractFactory {
+/**
+ * @author MinPhone, Seid, Asrat
+ */
+public class FinCoComponentFactory implements IFincoAbstractFactory {
 
     @Override
     public GUI getGui() {
@@ -10,7 +13,7 @@ public class FInCoComponentFactory implements IFincoAbstractFactory {
     }
 
     @Override
-    public IFincoServiceFacade getFincoService() {
+    public IFincoServiceFacade getFinCoService() {
         return null;
     }
 }

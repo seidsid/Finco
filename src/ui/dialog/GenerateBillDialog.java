@@ -5,6 +5,9 @@ import ui.base.BaseDialog;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * @author MinPhone, Seid, Asrat
+ */
 public class GenerateBillDialog extends BaseDialog {
 
     protected JScrollPane scrollPane;

@@ -1,3 +1,6 @@
+/**
+ * @author MinPhone, Seid, Asrat
+ */
 public class FinCo {
 
     public static void main(String[] args) {
@@ -6,7 +9,7 @@ public class FinCo {
     }
 
     public void start() {
-        IFincoAbstractFactory abstractFactory = new FInCoComponentFactory();
+        IFincoAbstractFactory abstractFactory = new FinCoComponentFactory();
         abstractFactory.getGui().start();
     }
 
