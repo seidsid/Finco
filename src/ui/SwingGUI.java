@@ -1,5 +1,6 @@
 package ui;
 
+import service.IFincoServiceFacade;
 import ui.common.UiUtilities;
 
 import javax.swing.*;
@@ -9,9 +10,15 @@ import javax.swing.*;
  */
 public class SwingGUI implements GUI {
 
+    private IFincoServiceFacade facade;
+
+    public SwingGUI(IFincoServiceFacade facade) {
+        this.facade = facade;
+    }
+
     @Override
     public void start() {
-        FinCoMainGUI mainPageGUI = new FinCoMainGUI();
+        FinCoMainGUI mainPageGUI = new FinCoMainGUI(facade);
 
         mainPageGUI.setTitle("FinCo Application");
         mainPageGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

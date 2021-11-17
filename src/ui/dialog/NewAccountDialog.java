@@ -5,14 +5,25 @@ import ui.common.OkSubmitDelegate;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 /**
  * @author MinPhone, Seid, Asrat
  */
 public class NewAccountDialog extends BaseDialog {
 
+    private final OkSubmitDelegate delegate;
+
+    private JTextField textFieldName;
+    private JTextField textFieldEmail;
+    private JTextField textFieldAccNo;
+    private JTextField textFieldStreet;
+    private JTextField textFieldCity;
+    private JTextField textFieldState;
+    private JTextField textFieldZip;
+
     public NewAccountDialog(OkSubmitDelegate delegate) {
-        super(delegate);
+        this.delegate = delegate;
         setBtnSubmitVisible();
         reCreateUI();
     }
@@ -40,6 +51,7 @@ public class NewAccountDialog extends BaseDialog {
 
         jPanel.add(addNameLayout());
         jPanel.add(addEmailLayout());
+        jPanel.add(addAccNoLayout());
         jPanel.add(addStreetLayout());
         jPanel.add(addCityLayout());
         jPanel.add(addStateLayout());
@@ -57,7 +69,7 @@ public class NewAccountDialog extends BaseDialog {
 
         jPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 
-        JTextField textFieldName = new JTextField();
+        textFieldName = new JTextField();
         jPanel.add(textFieldName);
 
         return jPanel;
@@ -72,8 +84,23 @@ public class NewAccountDialog extends BaseDialog {
 
         jPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 
-        JTextField textFieldEmail = new JTextField();
+        textFieldEmail = new JTextField();
         jPanel.add(textFieldEmail);
+
+        return jPanel;
+    }
+
+    private JPanel addAccNoLayout() {
+        JPanel jPanel = new JPanel();
+        jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.X_AXIS));
+
+        JLabel labelAccNo = new JLabel("Acc No.");
+        jPanel.add(labelAccNo);
+
+        jPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+
+        textFieldAccNo = new JTextField();
+        jPanel.add(textFieldAccNo);
 
         return jPanel;
     }
@@ -87,7 +114,7 @@ public class NewAccountDialog extends BaseDialog {
 
         jPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 
-        JTextField textFieldStreet = new JTextField();
+        textFieldStreet = new JTextField();
         jPanel.add(textFieldStreet);
 
         return jPanel;
@@ -102,7 +129,7 @@ public class NewAccountDialog extends BaseDialog {
 
         jPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 
-        JTextField textFieldCity = new JTextField();
+        textFieldCity = new JTextField();
         jPanel.add(textFieldCity);
 
         return jPanel;
@@ -117,7 +144,7 @@ public class NewAccountDialog extends BaseDialog {
 
         jPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 
-        JTextField textFieldState = new JTextField();
+        textFieldState = new JTextField();
         jPanel.add(textFieldState);
 
         return jPanel;
@@ -132,10 +159,16 @@ public class NewAccountDialog extends BaseDialog {
 
         jPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 
-        JTextField textFieldZip = new JTextField();
+        textFieldZip = new JTextField();
         jPanel.add(textFieldZip);
 
         return jPanel;
+    }
+
+    @Override
+    protected void btnOkActionPerformed() {
+        delegate.onSubmitClicked(List.of(textFieldName.getText(), textFieldEmail.getText(), textFieldAccNo.getText(),
+                textFieldStreet.getText(), textFieldCity.getText(), textFieldState.getText(), textFieldZip.getText()));
     }
 
 }

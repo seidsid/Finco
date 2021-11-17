@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Base class for All JFrame which will be used in FinCo Application
@@ -21,8 +22,8 @@ public abstract class BaseMainJFrame extends JFrame {
     protected String btnWithdrawLabel = "Withdraw";
     protected String btnAddAccLabel = "Add Account";
     protected String btnGenerateReportLabel = "Generate Report";
-    private DefaultTableModel model;
-    private JTable jTable;
+    protected JTable jTable;
+    protected DefaultTableModel model;
 
     /**
      * @return List of Labels(String) Columns want to show in the ScrollPane
@@ -219,6 +220,13 @@ public abstract class BaseMainJFrame extends JFrame {
      */
     protected void reCreateUI() {
         setUpMainLayout();
+    }
+
+    /**
+     * @param rowData set the single row of the table
+     */
+    protected void setDataInTable(Vector<String> rowData) {
+        model.addRow(rowData);
     }
 
 }

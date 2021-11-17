@@ -11,6 +11,11 @@ import java.awt.*;
 public class GenerateBillDialog extends BaseDialog {
 
     protected JScrollPane scrollPane;
+    private final String report;
+
+    public GenerateBillDialog(String report) {
+        this.report = report;
+    }
 
     @Override
     protected String giveDialogTitle() {
@@ -33,7 +38,7 @@ public class GenerateBillDialog extends BaseDialog {
         jPanel.setLayout(new GridLayout(1, 1));
         jPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 2, 10));
         scrollPane = new JScrollPane();
-        scrollPane.getViewport().add(new TextField("Test"));
+        scrollPane.getViewport().add(new TextField(report));
 
         jPanel.add(scrollPane);
 

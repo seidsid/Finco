@@ -1,11 +1,7 @@
 package ui.base;
 
-import ui.common.OkSubmitDelegate;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.util.List;
 
 
 /**
@@ -17,7 +13,6 @@ public abstract class BaseDialog extends JDialog {
 
     private final JButton btnOk = new JButton("Ok");
     private final JButton btnCancel = new JButton("Cancel");
-    private final OkSubmitDelegate delegate;
 
     private boolean isSubmitVisible = false;
 
@@ -41,21 +36,7 @@ public abstract class BaseDialog extends JDialog {
      */
     protected abstract JPanel createUIAtCenter();
 
-    /**
-     * Default Constructor, can use when doesn't use <b><i>Ok(Submit)</i></b> Button
-     */
     public BaseDialog() {
-        this(null);
-    }
-
-    /**
-     * We must use this Constructor when we <b><i>Ok(Submit)</i></b> Button
-     *
-     * @param delegate which will be used(delegate) when click <b><i>Ok(Submit)</i></b> Button click.
-     * @see BaseDialog#createUIAtSouth()
-     */
-    public BaseDialog(OkSubmitDelegate delegate) {
-        this.delegate = delegate;
         setVisible(false);
         setTitle(giveDialogTitle());
         setSize(giveDialogWidth(), giveDialogHeight());
@@ -87,10 +68,8 @@ public abstract class BaseDialog extends JDialog {
         if (isSubmitVisible) {
             jPanel.add(btnOk);
             btnOk.addActionListener(e -> {
-                if (delegate != null) {
-                    dispose();
-                    delegate.onSubmitClicked(List.of(""));
-                }
+                dispose();
+                btnOkActionPerformed();
             });
         }
         jPanel.add(btnCancel);
@@ -134,6 +113,10 @@ public abstract class BaseDialog extends JDialog {
      */
     protected void reCreateUI() {
         addUIComponent();
+    }
+
+    protected void btnOkActionPerformed() {
+
     }
 
 }

@@ -5,6 +5,7 @@ import ui.common.OkSubmitDelegate;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 /**
  * @author MinPhone, Seid, Asrat
@@ -14,11 +15,12 @@ public class AmountDialog extends BaseDialog {
     private final String title;
     private final String fieldTitle;
     private final String fieldValue;
+    private final OkSubmitDelegate delegate;
 
     private JTextField textFieldAmount;
 
     public AmountDialog(OkSubmitDelegate delegate, String title, String fieldTitle, String fieldValue) {
-        super(delegate);
+        this.delegate = delegate;
         this.title = title;
         this.fieldTitle = fieldTitle;
         this.fieldValue = fieldValue;
@@ -61,5 +63,10 @@ public class AmountDialog extends BaseDialog {
         jPanel.add(textFieldAmount);
 
         return jPanel;
+    }
+
+    @Override
+    protected void btnOkActionPerformed() {
+        delegate.onSubmitClicked(List.of(textFieldAmount.getText()));
     }
 }
