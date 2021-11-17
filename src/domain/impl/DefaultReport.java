@@ -12,6 +12,6 @@ public class DefaultReport implements IReport {
 
     @Override
     public String getReport() {
-        return null;
+        return String.format("account no:%s\nbalance:%s\n");
     }
 }

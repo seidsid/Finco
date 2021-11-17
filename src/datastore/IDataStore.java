@@ -1,6 +1,7 @@
 package datastore;
 
 import domain.ICustomer;
+
 import java.util.Optional;
 
 public interface IDataStore <T extends ICustomer>{

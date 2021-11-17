@@ -4,9 +4,9 @@ import domain.Entry;
 import domain.IAccount;
 import domain.InsufficientBalanceException;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.math.BigDecimal;
 
 public abstract class AccountTemplate implements IAccount {
     private List<Entry> entries;
@@ -30,13 +30,14 @@ public abstract class AccountTemplate implements IAccount {
     @Override
     public void deposit(Entry entry) {
         entries.add(entry);
+        balance=balance.add(entry.getAmount());
     }
 
     public abstract float getInterestPercentage();
 
     @Override
     public void addInterest() {
-        balance.add(balance.multiply(new BigDecimal(getInterestPercentage())));
+        balance=balance.add(balance.multiply(new BigDecimal(getInterestPercentage())));
     }
 
     @Override
@@ -46,12 +47,17 @@ public abstract class AccountTemplate implements IAccount {
         }
         else {
             entries.add(entry);
-            balance.subtract(entry.getAmount());
+            balance=balance.subtract(entry.getAmount());
         }
     }
 
     @Override
     public String getAccountNumber() {
         return accountNumber;
+    }
+
+    @Override
+    public BigDecimal getBalance() {
+        return balance;
     }
 }

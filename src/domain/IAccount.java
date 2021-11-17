@@ -8,5 +8,6 @@ public interface IAccount {
     void addInterest();
     String getAccountNumber();
     IReport getReport();
+    BigDecimal getBalance();
 }
 
