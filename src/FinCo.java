@@ -1,4 +1,5 @@
 import datastore.IDataStore;
+import datastore.InMemoryDataStore;
 import domain.impl.DefaultCustomer;
 import service.impl.DefaultFincoServiceFacade;
 import ui.GUI;
@@ -15,7 +16,7 @@ public class FinCo {
     }
 
     public void start() {
-        IDataStore<DefaultCustomer> dataStore=null;
+        IDataStore<DefaultCustomer> dataStore = new InMemoryDataStore<>();
         GUI gui = new SwingGUI(new DefaultFincoServiceFacade(dataStore));
         gui.start();
 //        IFincoAbstractFactory abstractFactory = new FinCoComponentFactory();

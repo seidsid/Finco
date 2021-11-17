@@ -14,7 +14,9 @@ import util.DefaultEmailSender;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Vector;
 
 /**
@@ -36,7 +38,7 @@ public class FinCoMainGUI extends BaseMainJFrame {
 
     @Override
     protected List<String> setColumnTitlesForTable() {
-        return List.of("Name", "Account No.", "Email", "Amount");
+        return Arrays.asList("Name", "Account No.", "Email", "Amount");
     }
 
     @Override
@@ -99,7 +101,7 @@ public class FinCoMainGUI extends BaseMainJFrame {
             try {
                 int zip = Integer.parseInt(list.get(6));
 
-                Vector<String> rowData = new Vector<>(List.of(customerName, accNo, email, "0"));
+                Vector<String> rowData = new Vector<>(Arrays.asList(customerName, accNo, email, "0"));
                 setDataInTable(rowData);
 
                 facade.createCustomer(new DefaultCustomer(email, customerName,
@@ -119,12 +121,9 @@ public class FinCoMainGUI extends BaseMainJFrame {
             GenerateBillDialog dialog;
             String email = (String) model.getValueAt(selection, 2);
             String accNo = (String) model.getValueAt(selection, 1);
-            var report = facade.generateReport(email, accNo);
-            if (report.isPresent()) {
-                dialog = new GenerateBillDialog(((IReport) report.get()).getReport());
-            } else {
-                dialog = new GenerateBillDialog("");
-            }
+            Optional<IReport> report = facade.generateReport(email, accNo);
+            dialog = report.map(iReport -> new GenerateBillDialog(iReport.getReport()))
+                    .orElseGet(() -> new GenerateBillDialog(""));
             UiUtilities.getInstance().centerFrameOnDesktop(dialog);
             dialog.setVisible(true);
         } else {

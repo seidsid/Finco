@@ -5,7 +5,7 @@ import ui.common.OkSubmitDelegate;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * @author MinPhone, Seid, Asrat
@@ -67,6 +67,6 @@ public class AmountDialog extends BaseDialog {
 
     @Override
     protected void btnOkActionPerformed() {
-        delegate.onSubmitClicked(List.of(textFieldAmount.getText()));
+        delegate.onSubmitClicked(Arrays.asList(textFieldAmount.getText()));
     }
 }
