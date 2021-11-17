@@ -27,16 +27,16 @@ public class InMemoryDataStore<T extends ICustomer> implements IDataStore<T>{
     @Override
     public void update(T customer) {
         if(exists(customer.getEmail()))
-        db.replace(customer.getEmail().toLowerCase(),customer);
+            db.replace(customer.getEmail().toLowerCase(),customer);
     }
 
     @Override
     public Optional<T> findByEmail(String email) {
         if(exists(email)){
-        T c=db.get(email.toLowerCase());
-         return Optional.of(c);
+            T c=db.get(email.toLowerCase());
+            return Optional.of(c);
         }
-         return Optional.empty();
+        return Optional.empty();
     }
 
     @Override
