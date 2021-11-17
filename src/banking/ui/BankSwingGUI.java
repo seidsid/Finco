@@ -15,6 +15,7 @@ public class BankSwingGUI extends SwingGUI {
 
     public BankSwingGUI(IFincoServiceFacade facade) {
         super(facade);
+        this.facade = facade;
     }
 
     @Override

@@ -9,7 +9,6 @@ import Framework.util.DefaultEmailSender;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
@@ -40,7 +39,7 @@ public class BankMainGUI extends FinCoMainGUI {
 
     @Override
     protected void btnAddAccActionPerformed(ActionEvent e) {
-        AddPersonalAccountDialog dialog = new AddPersonalAccountDialog(list -> {
+        AddCompanyAccountDialog dialog = new AddCompanyAccountDialog(list -> {
             String customerName = list.get(0);
             String accNo = list.get(2);
             String email = list.get(1);
@@ -63,18 +62,6 @@ public class BankMainGUI extends FinCoMainGUI {
         }, "Add Company Account");
         UiUtilities.getInstance().centerFrameOnDesktop(dialog);
         dialog.setVisible(true);
-    }
-
-    @Override
-    protected void addDeposit(int selection, long depositAmount) {
-        facade.deposit((String) model.getValueAt(selection, emailIndexOfTable),
-                (String) model.getValueAt(selection, accountIdIndexOfTable), BigDecimal.valueOf(depositAmount));
-    }
-
-    @Override
-    protected void addWithdraw(int selection, long withdrawAmount) {
-        facade.withDraw((String) model.getValueAt(selection, emailIndexOfTable),
-                (String) model.getValueAt(selection, accountIdIndexOfTable), BigDecimal.valueOf(withdrawAmount));
     }
 
     private void onAddPersonalAccActionPerformed(ActionEvent e) {
