@@ -9,11 +9,12 @@ import Framework.domain.ICustomer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public abstract class Customer implements ICustomer {
+public abstract class Customer extends ICustomer {
     private String email;
     private String name;
     private IEmailSender emailSender;
@@ -31,6 +32,7 @@ public abstract class Customer implements ICustomer {
     @Override
     public void addAccount(IAccount account) {
         accounts.add(account);
+        notifyAllObservers();
     }
 
     @Override
@@ -49,6 +51,12 @@ public abstract class Customer implements ICustomer {
         if (shouldSendEmailForDeposit(e)) {
             sendEmail(new Email("Account deposit Performed", "..."));
         }
+        notifyAllObservers();
+    }
+
+    private void notifyAllObservers() {
+        setChanged();
+        notifyObservers();
     }
 
     @Override
@@ -57,11 +65,13 @@ public abstract class Customer implements ICustomer {
         if (shouldSendEmailForWithdraw(e)) {
             sendEmail(new Email("Account withdraw Performed", "..."));
         }
+        notifyAllObservers();
     }
 
     @Override
     public void addInterest() {
         doAll(account -> account.addInterest(), account -> true);
+        notifyAllObservers();
     }
 
     @Override
@@ -82,4 +92,17 @@ public abstract class Customer implements ICustomer {
     public abstract boolean shouldSendEmailForWithdraw(Entry e);
 
     public abstract boolean shouldSendEmailForDeposit(Entry e);
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return email.equals(customer.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email);
+    }
 }

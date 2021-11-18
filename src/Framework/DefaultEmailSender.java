@@ -1,7 +1,4 @@
-package Framework.util;
-
-import Framework.Email;
-import Framework.IEmailSender;
+package Framework;
 
 public class DefaultEmailSender implements IEmailSender {
     @Override

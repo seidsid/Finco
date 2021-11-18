@@ -8,8 +8,9 @@ public class CompanyCustomer extends DefaultCustomer {
 
     private final String noOfEmployee;
 
-    public CompanyCustomer(String email, String name, IEmailSender emailSender, Address address, String noOfEmployee) {
-        super(email, name, emailSender, address);
+    public CompanyCustomer(String accountNumber, String email, String name, IEmailSender emailSender,
+                           Address address, String noOfEmployee) {
+        super(accountNumber, email, name, emailSender, address);
         this.noOfEmployee = noOfEmployee;
     }
 }

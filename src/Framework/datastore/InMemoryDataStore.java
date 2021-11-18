@@ -2,14 +2,15 @@ package Framework.datastore;
 
 import Framework.domain.ICustomer;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Optional;
 
-public class InMemoryDataStore<T extends ICustomer> implements IDataStore<T>{
+public class InMemoryDataStore<T extends ICustomer> implements IDataStore<T> {
 
-    private HashMap<String,T> db;
+    private HashMap<String, T> db;
 
     public InMemoryDataStore() {
-        db=new HashMap<>();
+        db = new HashMap<>();
     }
 
     @Override
@@ -26,14 +27,14 @@ public class InMemoryDataStore<T extends ICustomer> implements IDataStore<T>{
 
     @Override
     public void update(T customer) {
-        if(exists(customer.getEmail()))
-            db.replace(customer.getEmail().toLowerCase(),customer);
+        if (exists(customer.getEmail()))
+            db.replace(customer.getEmail().toLowerCase(), customer);
     }
 
     @Override
     public Optional<T> findByEmail(String email) {
-        if(exists(email)){
-            T c=db.get(email.toLowerCase());
+        if (exists(email)) {
+            T c = db.get(email.toLowerCase());
             return Optional.of(c);
         }
         return Optional.empty();
@@ -41,7 +42,7 @@ public class InMemoryDataStore<T extends ICustomer> implements IDataStore<T>{
 
     @Override
     public boolean exists(String email) {
-        if(db.containsKey(email.toLowerCase())) return true;
+        if (db.containsKey(email.toLowerCase())) return true;
         else return false;
     }
 }

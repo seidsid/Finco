@@ -1,5 +1,6 @@
 package Framework.ui;
 
+import Framework.DefaultEmailSender;
 import Framework.domain.Address;
 import Framework.domain.IReport;
 import Framework.domain.impl.DefaultCustomer;
@@ -9,7 +10,6 @@ import Framework.ui.common.UiUtilities;
 import Framework.ui.dialog.AmountDialog;
 import Framework.ui.dialog.GenerateBillDialog;
 import Framework.ui.dialog.NewAccountDialog;
-import Framework.util.DefaultEmailSender;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -35,6 +35,7 @@ public class FinCoMainGUI extends BaseMainJFrame {
         amountIndexOfTable = 3;
         dialogDefaultIndexOfTable = 1;
         accountIdIndexOfTable = 1;
+        emailIndexOfTable = 2;
         this.facade = facade;
         JButton button = new JButton("Add Interest");
         button.addActionListener(e -> {
@@ -84,8 +85,8 @@ public class FinCoMainGUI extends BaseMainJFrame {
                 Vector<String> rowData = new Vector<>(Arrays.asList(customerName, accNo, email, "0"));
                 setDataInTable(rowData);
 
-                facade.createCustomer(new DefaultCustomer(email, customerName,
-                        new DefaultEmailSender(), new Address(city, state, zip, street)));
+                facade.createCustomer(new DefaultCustomer(accNo, email, customerName, new DefaultEmailSender(),
+                        new Address(city, state, zip, street)));
             } catch (NumberFormatException exception) {
                 JOptionPane.showMessageDialog(this, "Zip Code Number must be Number");
             }

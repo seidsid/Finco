@@ -1,11 +1,11 @@
 package banking.ui;
 
+import Framework.DefaultEmailSender;
 import Framework.domain.Address;
 import Framework.domain.impl.DefaultCustomer;
 import Framework.service.IFincoServiceFacade;
 import Framework.ui.FinCoMainGUI;
 import Framework.ui.common.UiUtilities;
-import Framework.util.DefaultEmailSender;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -54,8 +54,8 @@ public class BankMainGUI extends FinCoMainGUI {
                         UiUtilities.getInstance().getAccountTypeShortForm(accType), "0"));
                 setDataInTable(rowData);
 
-                facade.createCustomer(new DefaultCustomer(email, customerName,
-                        new DefaultEmailSender(), new Address(city, state, zip, street)));
+                facade.createCustomer(new DefaultCustomer(accNo, email, customerName, new DefaultEmailSender(),
+                        new Address(city, state, zip, street)));
             } catch (NumberFormatException exception) {
                 JOptionPane.showMessageDialog(this, "Zip Code Number must be Number");
             }
@@ -80,8 +80,8 @@ public class BankMainGUI extends FinCoMainGUI {
                         UiUtilities.getInstance().getAccountTypeShortForm(accType), "0"));
                 setDataInTable(rowData);
 
-                facade.createCustomer(new DefaultCustomer(email, customerName,
-                        new DefaultEmailSender(), new Address(city, state, zip, street)));
+                facade.createCustomer(new DefaultCustomer(accNo, email, customerName, new DefaultEmailSender(),
+                        new Address(city, state, zip, street)));
             } catch (NumberFormatException exception) {
                 JOptionPane.showMessageDialog(this, "Zip Code Number must be Number");
             }

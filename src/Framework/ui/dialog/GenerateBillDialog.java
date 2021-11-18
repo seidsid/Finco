@@ -15,6 +15,7 @@ public class GenerateBillDialog extends BaseDialog {
 
     public GenerateBillDialog(String report) {
         this.report = report;
+        reCreateUI();
     }
 
     @Override

@@ -4,9 +4,9 @@ import Framework.domain.Entry;
 import Framework.domain.IAccount;
 import Framework.domain.InsufficientBalanceException;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.math.BigDecimal;
 
 public abstract class AccountTemplate implements IAccount {
     private List<Entry> entries;
@@ -20,38 +20,43 @@ public abstract class AccountTemplate implements IAccount {
     }
 
     public AccountTemplate(BigDecimal balance, String accountNumber) {
-        this(new ArrayList<Entry>(),balance,accountNumber);
+        this(new ArrayList<Entry>(), balance, accountNumber);
     }
 
     public AccountTemplate(String accountNumber) {
-        this(new ArrayList<Entry>(),new BigDecimal(0),accountNumber);
+        this(new ArrayList<Entry>(), new BigDecimal(0), accountNumber);
     }
 
     @Override
     public void deposit(Entry entry) {
         entries.add(entry);
+        balance = balance.add(entry.getAmount());
     }
 
     public abstract float getInterestPercentage();
 
     @Override
     public void addInterest() {
-        balance.add(balance.multiply(new BigDecimal(getInterestPercentage())));
+        balance = balance.add(balance.multiply(new BigDecimal(getInterestPercentage())));
     }
 
     @Override
     public void withdraw(Entry entry) {
-        if (entry.getAmount().compareTo(balance)>0){
-            throw new InsufficientBalanceException(String.format("Insufficient balance! available:%s, withdrawal amount:%s",balance,entry.getAmount()));
-        }
-        else {
+        if (entry.getAmount().compareTo(balance) > 0) {
+            throw new InsufficientBalanceException(String.format("Insufficient balance! available:%s, withdrawal amount:%s", balance, entry.getAmount()));
+        } else {
             entries.add(entry);
-            balance.subtract(entry.getAmount());
+            balance = balance.subtract(entry.getAmount());
         }
     }
 
     @Override
     public String getAccountNumber() {
         return accountNumber;
+    }
+
+    @Override
+    public BigDecimal getBalance() {
+        return balance;
     }
 }
