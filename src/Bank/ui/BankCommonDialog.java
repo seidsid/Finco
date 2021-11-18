@@ -62,5 +62,4 @@ public abstract class BankCommonDialog<T> extends CommonDialog<T> {
         if (type.toLowerCase().equals("saving"))result= AccountType.SAVING;
         return result;
     }
-
 }

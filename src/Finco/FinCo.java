@@ -1,4 +1,4 @@
-package Finco.ui.impl;
+package Finco;
 
 import Finco.datastore.InMemoryDataStore;
 import Finco.domain.impl.DefaultCustomer;
@@ -7,14 +7,13 @@ import Finco.service.impl.DefaultFincoServiceFacade;
 import Finco.ui.FacadeTableAbstractFactory;
 import Finco.ui.GUI;
 import Finco.ui.ITable;
+import Finco.ui.impl.DefaultTable;
+import Finco.ui.impl.DefaultWindow;
 
-import javax.swing.*;
-import java.awt.*;
+public class FinCo {
 
-public class SwingGUI implements GUI {
-    @Override
-    public void start() {
-        JFrame jFrame=new DefaultWindow(new FacadeTableAbstractFactory<DefaultCustomer>() {
+    public static void main(String[] args) {
+        start(new DefaultWindow(new FacadeTableAbstractFactory<>() {
             @Override
             public ITable<DefaultCustomer> getTable() {
                 return new DefaultTable();
@@ -22,13 +21,13 @@ public class SwingGUI implements GUI {
 
             @Override
             public IFincoServiceFacade<DefaultCustomer> getServiceFacade() {
-                return new DefaultFincoServiceFacade<DefaultCustomer>(new InMemoryDataStore<DefaultCustomer>());
+                return new DefaultFincoServiceFacade<>(new InMemoryDataStore<>());
             }
-        });
-        jFrame.setSize(new Dimension(1000,500));
-        jFrame.setVisible(true);
+        }));
     }
-    public static void main(String [] args){
-        new SwingGUI().start();
+
+    public static void start(GUI gui) {
+        gui.start();
     }
+
 }

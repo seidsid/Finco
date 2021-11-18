@@ -3,12 +3,13 @@ package Finco.ui.impl;
 import Finco.domain.impl.DefaultCustomer;
 import Finco.ui.Dialog;
 import Finco.ui.FacadeTableAbstractFactory;
+import Finco.ui.GUI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Optional;
 
-public class DefaultWindow extends MainWindow<DefaultCustomer>{
+public class DefaultWindow extends MainWindow<DefaultCustomer> implements GUI {
     public DefaultWindow(FacadeTableAbstractFactory<DefaultCustomer> factory) throws HeadlessException {
         super(factory);
     }

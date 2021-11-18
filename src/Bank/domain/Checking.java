@@ -7,16 +7,16 @@ import Finco.domain.impl.DefaultReport;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class Saving extends BankAccount {
-    public Saving(List<Entry> entries, BigDecimal balance, String accountNumber) {
+public class Checking extends BankAccount {
+    public Checking(List<Entry> entries, BigDecimal balance, String accountNumber) {
         super(entries, balance, accountNumber);
     }
 
-    public Saving(BigDecimal balance, String accountNumber) {
+    public Checking(BigDecimal balance, String accountNumber) {
         super(balance, accountNumber);
     }
 
-    public Saving(String accountNumber) {
+    public Checking(String accountNumber) {
         super(accountNumber);
     }
 
@@ -27,6 +27,6 @@ public class Saving extends BankAccount {
 
     @Override
     public float getInterestPercentage() {
-        return 0.1f;
+        return 0.01f;
     }
 }

@@ -7,17 +7,21 @@ import Finco.ui.impl.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Optional;
 import java.util.List;
+import java.util.Optional;
 
 public class BankMainWindow extends MainWindow<DefaultCustomer> {
     private JButton addCompanyButton;
+
     public BankMainWindow(FacadeTableAbstractFactory<DefaultCustomer> factory) throws HeadlessException {
         super(factory);
-        addCompanyButton=new JButton("Add Company Account");
+        addCompanyButton = new JButton("Add Company Account");
         addCompanyButton.addActionListener(e -> {
-            CompanyAccountDialogBank companyAccountDialog=new CompanyAccountDialogBank();
-            companyAccountDialog.setCallback(o -> factory.getServiceFacade().createCustomer(o));
+            CompanyAccountDialogBank companyAccountDialog = new CompanyAccountDialogBank();
+            companyAccountDialog.setCallback(o -> {
+                factory.getServiceFacade().createCustomer(o);
+                table.add(o);
+            });
             companyAccountDialog.setVisible(true);
         });
     }
@@ -34,7 +38,7 @@ public class BankMainWindow extends MainWindow<DefaultCustomer> {
 
     @Override
     public Dialog<DefaultCustomer> createAccountDialog() {
-        return null;
+        return new PersonAccountDialogBank();
     }
 
     @Override

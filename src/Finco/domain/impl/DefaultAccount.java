@@ -6,7 +6,7 @@ import Finco.domain.IReport;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class DefaultAccount extends AccountTemplate {
+public class DefaultAccount extends Account {
     private final float interestPercent=0.13f;
     public DefaultAccount(List<Entry> entries, BigDecimal balance, String accountNumber) {
         super(entries, balance, accountNumber);

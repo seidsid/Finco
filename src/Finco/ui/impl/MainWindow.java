@@ -4,16 +4,14 @@ import Finco.domain.IAccount;
 import Finco.domain.ICustomer;
 import Finco.service.IFincoServiceFacade;
 import Finco.ui.Dialog;
-import Finco.ui.FacadeTableAbstractFactory;
-import Finco.ui.IMainWindow;
-import Finco.ui.ITable;
+import Finco.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-public abstract class MainWindow<T extends ICustomer> extends JFrame implements IMainWindow<T>  {
+public abstract class MainWindow<T extends ICustomer> extends JFrame implements IMainWindow<T>, GUI {
     private JButton addAccountButton;
     private JButton addInterestButton;
     private JButton depositButton;
@@ -21,11 +19,12 @@ public abstract class MainWindow<T extends ICustomer> extends JFrame implements 
     private JButton exit;
     private JButton generateReportButton;
 
-    private ITable<T> table;
+    protected ITable<T> table;
     private IFincoServiceFacade<T> serviceFacade;
+
     public MainWindow(FacadeTableAbstractFactory<T> factory) throws HeadlessException {
-        table=factory.getTable();
-        serviceFacade= factory.getServiceFacade();
+        table = factory.getTable();
+        serviceFacade = factory.getServiceFacade();
     }
 
     @Override
@@ -43,25 +42,25 @@ public abstract class MainWindow<T extends ICustomer> extends JFrame implements 
         JPanel verticalPanel = addComponentsToVerticalPanel();
 
         getContentPane().setLayout(new BorderLayout());
-        getContentPane().add(horizontalPanel,BorderLayout.NORTH);
-        getContentPane().add(new JScrollPane(table.getTable()),BorderLayout.CENTER);
-        getContentPane().add(verticalPanel,BorderLayout.EAST);
+        getContentPane().add(horizontalPanel, BorderLayout.NORTH);
+        getContentPane().add(new JScrollPane(table.getTable()), BorderLayout.CENTER);
+        getContentPane().add(verticalPanel, BorderLayout.EAST);
     }
 
-    private void showReport(T customer, IAccount account){
+    private void showReport(T customer, IAccount account) {
         (new ReportDialog(account.getReport())).setVisible(true);
     }
 
 
     private JPanel addComponentsToVerticalPanel() {
         JPanel verticalPanel = new JPanel();
-        verticalPanel.setLayout(new BoxLayout(verticalPanel,BoxLayout.Y_AXIS));
+        verticalPanel.setLayout(new BoxLayout(verticalPanel, BoxLayout.Y_AXIS));
         verticalPanel.add(generateReportButton);
         verticalPanel.add(addInterestButton);
         verticalPanel.add(depositButton);
         verticalPanel.add(withdrawButton);
 
-        Optional<Iterable<JButton>> verticalButtons=getVerticalButtons();
+        Optional<Iterable<JButton>> verticalButtons = getVerticalButtons();
         verticalButtons.ifPresent(buttons -> buttons.forEach(verticalPanel::add));
 
         verticalPanel.add(exit);
@@ -69,28 +68,28 @@ public abstract class MainWindow<T extends ICustomer> extends JFrame implements 
     }
 
     private JPanel addComponentsToHorizontalPanel() {
-        JPanel horizontalPanel=new JPanel();
-        horizontalPanel.setLayout(new BoxLayout(horizontalPanel,BoxLayout.X_AXIS));
+        JPanel horizontalPanel = new JPanel();
+        horizontalPanel.setLayout(new BoxLayout(horizontalPanel, BoxLayout.X_AXIS));
 
         horizontalPanel.add(addAccountButton);
-        Optional<Iterable<JButton>> horizontalButtons=getHorizontalButtons();
+        Optional<Iterable<JButton>> horizontalButtons = getHorizontalButtons();
         horizontalButtons.ifPresent(buttons -> buttons.forEach(horizontalPanel::add));
         return horizontalPanel;
     }
 
     private void addExitButton() {
-        exit=new JButton();
+        exit = new JButton();
         exit.setText("Exit");
     }
 
     private void addWithdrawButton() {
-        withdrawButton=new JButton();
+        withdrawButton = new JButton();
         withdrawButton.setText(getWithdrawButtonLabel());
         withdrawButton.addActionListener(e -> {
             table.getSelected().ifPresent(tuple -> {
-                Dialog<BigDecimal> dialog=createDepositDialog();
+                Dialog<BigDecimal> dialog = createDepositDialog();
                 dialog.setCallback(bigDecimal -> {
-                    serviceFacade.withDraw(tuple.getFirst().getEmail(),tuple.getSecond().getAccountNumber(),bigDecimal);
+                    serviceFacade.withDraw(tuple.getFirst().getEmail(), tuple.getSecond().getAccountNumber(), bigDecimal);
                 });
                 dialog.setVisible(true);
             });
@@ -98,13 +97,13 @@ public abstract class MainWindow<T extends ICustomer> extends JFrame implements 
     }
 
     private void addDepositButton() {
-        depositButton=new JButton();
+        depositButton = new JButton();
         depositButton.setText("Deposit");
         depositButton.addActionListener(e -> {
-            table.getSelected().ifPresent(tuple->{
-                Dialog<BigDecimal> dialog=createDepositDialog();
+            table.getSelected().ifPresent(tuple -> {
+                Dialog<BigDecimal> dialog = createDepositDialog();
                 dialog.setCallback(bigDecimal -> {
-                    serviceFacade.deposit(tuple.getFirst().getEmail(),tuple.getSecond().getAccountNumber(),bigDecimal);
+                    serviceFacade.deposit(tuple.getFirst().getEmail(), tuple.getSecond().getAccountNumber(), bigDecimal);
                 });
                 dialog.setVisible(true);
             });
@@ -112,26 +111,26 @@ public abstract class MainWindow<T extends ICustomer> extends JFrame implements 
     }
 
     private void addInterestButton() {
-        addInterestButton=new JButton();
+        addInterestButton = new JButton();
         addInterestButton.setText("Add Interest");
         addInterestButton.addActionListener(e -> serviceFacade.addInterest());
     }
 
     private void generateReportButton() {
-        generateReportButton=new JButton();
+        generateReportButton = new JButton();
         generateReportButton.setText("Generate Report");
         generateReportButton.addActionListener(e -> {
-            table.getSelected().ifPresent(ti ->{
-                showReport(ti.getFirst(),ti.getSecond());
-            } );
+            table.getSelected().ifPresent(ti -> {
+                showReport(ti.getFirst(), ti.getSecond());
+            });
         });
     }
 
     private void addAccountButton() {
-        addAccountButton=new JButton();
+        addAccountButton = new JButton();
         addAccountButton.setText(getAddAccountButtonLabel());
         addAccountButton.addActionListener(e -> {
-            Dialog<T> accountDialog=createAccountDialog();
+            Dialog<T> accountDialog = createAccountDialog();
             accountDialog.setCallback(o -> {
                 table.add(o);
                 serviceFacade.createCustomer(o);
@@ -141,16 +140,23 @@ public abstract class MainWindow<T extends ICustomer> extends JFrame implements 
     }
 
     @Override
-    public  Dialog<BigDecimal> createDepositDialog() {
-        return new AmountDialog("Deposit","Account Number",table.getSelected().get().getSecond().getAccountNumber());
+    public Dialog<BigDecimal> createDepositDialog() {
+        return new AmountDialog("Deposit", "Account Number", table.getSelected().get().getSecond().getAccountNumber());
     }
 
     @Override
     public Dialog<BigDecimal> createWithdrawDialog() {
-        return new AmountDialog("Withdraw","Account Number",table.getSelected().get().getSecond().getAccountNumber());
+        return new AmountDialog("Withdraw", "Account Number", table.getSelected().get().getSecond().getAccountNumber());
+    }
+
+    @Override
+    public void start() {
+        setSize(new Dimension(1000, 500));
+        setVisible(true);
     }
 
     public abstract String getAddAccountButtonLabel();
+
     public abstract String getWithdrawButtonLabel();
 
 }
