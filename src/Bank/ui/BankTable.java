@@ -1,7 +1,11 @@
 package Bank.ui;
 
+import Bank.domain.Checking;
+import Bank.domain.Saving;
 import Finco.domain.IAccount;
+import Finco.domain.impl.Company;
 import Finco.domain.impl.DefaultCustomer;
+import Finco.domain.impl.Person;
 import Finco.ui.ITable;
 import Finco.util.Tuple;
 
@@ -34,7 +38,7 @@ public class BankTable implements ITable<DefaultCustomer>, Observer {
         model.addRow(new String[]{customer.getEmail(), account.getAccountNumber(), customer.getAddress().getState(),
                 Integer.toString(customer.getAddress().getZip()), customer.getAddress().getStreet(),
                 customer.getAddress().getCity(), account.getBalance().toString(),
-                getTypeName(customer.getClass().getName()), getTypeName(account.getClass().getName())});
+                getTypeName(customer), getTypeName(account)});
     }
 
     @Override
@@ -65,12 +69,12 @@ public class BankTable implements ITable<DefaultCustomer>, Observer {
         customers.values().forEach(this::add);
     }
 
-    private String getTypeName(String name) {
+    private String getTypeName(Object object) {
         String result = "";
-        if (name.equals("Finco.domain.impl.Person")) result = "P";
-        else if (name.equals("Finco.domain.impl.Company")) result = "C";
-        else if (name.equals("Bank.domain.Saving")) result = "S";
-        else if (name.equals("Bank.domain.Checking")) result = "Ch";
+        if (object instanceof Person) result = "P";
+        else if (object instanceof Company) result = "C";
+        else if (object instanceof Saving) result = "S";
+        else if (object instanceof Checking) result = "Ch";
         return result;
     }
 }
