@@ -1,13 +1,14 @@
-package Bank.domain;
+package Finco.domain.impl;
 
+import Bank.domain.BankAccount;
 import Finco.domain.Address;
 import Finco.domain.Entry;
-import Finco.domain.impl.DefaultCustomer;
+import Finco.domain.IPerson;
 import Finco.util.IEmailSender;
 
 import java.math.BigDecimal;
 
-public class Person extends DefaultCustomer {
+public class Person extends DefaultCustomer implements IPerson {
     private final BankAccount bankAccount;
 
     public Person(String email, String accountNumber, String name, IEmailSender emailSender, Address address, BankAccount bankAccount) {

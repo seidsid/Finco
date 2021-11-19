@@ -2,7 +2,7 @@ package Bank.ui;
 
 import Bank.domain.BankAccount;
 import Bank.domain.Checking;
-import Bank.domain.Company;
+import Finco.domain.impl.Company;
 import Bank.domain.Saving;
 import Finco.domain.Address;
 import Finco.util.DefaultEmailSender;

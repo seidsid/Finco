@@ -80,6 +80,7 @@ public abstract class MainWindow<T extends ICustomer> extends JFrame implements 
     private void addExitButton() {
         exit = new JButton();
         exit.setText("Exit");
+        exit.addActionListener(e -> System.exit(0));
     }
 
     private void addWithdrawButton() {

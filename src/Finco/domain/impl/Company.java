@@ -1,11 +1,12 @@
-package Bank.domain;
+package Finco.domain.impl;
 
+import Bank.domain.BankAccount;
 import Finco.domain.Address;
 import Finco.domain.Entry;
-import Finco.domain.impl.DefaultCustomer;
+import Finco.domain.IPerson;
 import Finco.util.IEmailSender;
 
-public class Company extends DefaultCustomer {
+public class Company extends DefaultCustomer implements IPerson {
     private int numberOfEmployees;
 
     public Company(String email, String accountNumber, String name, IEmailSender emailSender,

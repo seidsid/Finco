@@ -67,8 +67,8 @@ public class BankTable implements ITable<DefaultCustomer>, Observer {
 
     private String getTypeName(String name) {
         String result = "";
-        if (name.equals("Bank.domain.Person")) result = "P";
-        else if (name.equals("Bank.domain.Company")) result = "C";
+        if (name.equals("Finco.domain.impl.Person")) result = "P";
+        else if (name.equals("Finco.domain.impl.Company")) result = "C";
         else if (name.equals("Bank.domain.Saving")) result = "S";
         else if (name.equals("Bank.domain.Checking")) result = "Ch";
         return result;
